@@ -17,11 +17,12 @@ Through these works, we could research and make technology of intelligent vehicl
 ***This code is in Python 3.6***
 
 ## System diagram
-이미지 추가
-<이미지>
- 
+![1](https://user-images.githubusercontent.com/36785390/52612113-b61b6c00-2ecb-11e9-90f2-da6a51e00a7d.png){: width="30%" height="30%"}{: .left}
+   
+Get face images from the camera -> Grayscaling -> Light processing -> HOG & find face -> Face Landmark Estimation -> Detect drowsiness driving. 
+   
 In detail
-<이미지>
+![2](https://user-images.githubusercontent.com/36785390/52612116-ba478980-2ecb-11e9-9851-0e037d0db792.png)
 
 ## Extracting face and eye region
 + Using the **HOG face pattern**, to find the face from the Grayscaled-HOG-input-image. 
