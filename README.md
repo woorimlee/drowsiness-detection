@@ -16,7 +16,6 @@ Through these works, we could research and make technology of intelligent vehicl
    
 ***This code is in Python 3.6***
 
-***
 ## System diagram
 이미지 추가
 <이미지>
@@ -24,8 +23,6 @@ Through these works, we could research and make technology of intelligent vehicl
 In detail
 <이미지>
 
-
-***
 ## Extracting face and eye region
 + Using the **HOG face pattern**, to find the face from the Grayscaled-HOG-input-image. 
 + Use the **Face Landmark Estimation algorithm** to locate the landmarks on the face.
@@ -33,7 +30,6 @@ In detail
 <그림 5, 7, 8> 추가
 
 
-***
 ## Preprocessing
  
 : **Invert the lightness channel** detached from the original image and **composed it with the original grayscale image** to produce a clear image.
@@ -50,5 +46,4 @@ In detail
 + Results of preprocessing
 <그림 14> 추가
  
-***
 ## Drowsiness detection method
