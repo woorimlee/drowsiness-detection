@@ -17,34 +17,71 @@ Through these works, we could research and make technology of intelligent vehicl
 ***This code is in Python 3.6***
 
 ## System diagram
-![1](https://user-images.githubusercontent.com/36785390/52612113-b61b6c00-2ecb-11e9-90f2-da6a51e00a7d.png){: width="30%" height="30%"}{: .left}
-   
+ 
+<img src="https://user-images.githubusercontent.com/36785390/52612113-b61b6c00-2ecb-11e9-90f2-da6a51e00a7d.png" width="40%">
+    
+    
 Get face images from the camera -> Grayscaling -> Light processing -> HOG & find face -> Face Landmark Estimation -> Detect drowsiness driving. 
    
-In detail
-![2](https://user-images.githubusercontent.com/36785390/52612116-ba478980-2ecb-11e9-9851-0e037d0db792.png)
++ In detail
+
+<img src="https://user-images.githubusercontent.com/36785390/52612116-ba478980-2ecb-11e9-9851-0e037d0db792.png" width="80%">
+0 : The filming.
+  
+10 : Lightness preprocessing.
+  
+100 : Detecting drowsiness.
+  
+110 : Getting face's image.
+  
+120 : Finding eyes region.
+  
+130 : Determining the value of the EAR normally.
+  
+140 : Determining drowsiness driving.
+  
+141 : Calculating the value of the EAR.
+   
+142 : Calculating the amount of time eyes are closed.
+    
+143 : Calculating the amount of time eyes are opened.
+    
+144 : Determining the level of the drowsiness.
+
+
 
 ## Extracting face and eye region
 + Using the **HOG face pattern**, to find the face from the Grayscaled-HOG-input-image. 
+  
+<img src="https://user-images.githubusercontent.com/36785390/52613168-3b088480-2ed0-11e9-8651-97afc34f4bae.png" width="60%">
+   
 + Use the **Face Landmark Estimation algorithm** to locate the landmarks on the face.
   
-<그림 5, 7, 8> 추가
+<img src="https://user-images.githubusercontent.com/36785390/52613175-3d6ade80-2ed0-11e9-9290-ee5dc2f2d525.png" width="30%">
+<img src="https://user-images.githubusercontent.com/36785390/52613176-3f34a200-2ed0-11e9-8f3f-94998fd2ab63.png" width="30%">
+  
 
 
 ## Preprocessing
  
 : **Invert the lightness channel** detached from the original image and **composed it with the original grayscale image** to produce a clear image.
  
-<그림 9> 추가
-  + Converting color to grayscale using **Luma Coding**
-<공식> 추가
+<img src="https://user-images.githubusercontent.com/36785390/52613306-bb2eea00-2ed0-11e9-9b64-5c45981e953e.png" width="40%">
   
-<그림 10> 추가
++ Converting color to grayscale using **Luma Coding**
+  
+<img src="https://user-images.githubusercontent.com/36785390/52613343-dc8fd600-2ed0-11e9-93f6-e154e20df31d.png" width="35%">
+  
+<img src="https://user-images.githubusercontent.com/36785390/52613308-bc601700-2ed0-11e9-999e-40a2782932c9.png" width="40%">
+  
 + There are many different models in Color Space, the **LAB color space model** is the best way to separate Lightness. [Median filtering](https://en.wikipedia.org/wiki/Median_filter) is applied to convert the value of lightness(L) obtained by using the LAB color space to match the actual lighting conditions because it differs from the actual lighting conditions.
 + The pictures below are the original image, image that separates L channel, image with Median filter applied, and inverted images from left to right. Drowsiness detection method
     
-<그림 13> 추가
+<img src="https://user-images.githubusercontent.com/36785390/52613441-35f80500-2ed1-11e9-9c6c-819b9e92b150.png" width="70%">
+   
 + Results of preprocessing
-<그림 14> 추가
- 
+   
+<img src="https://user-images.githubusercontent.com/36785390/52613443-385a5f00-2ed1-11e9-94e3-e325b3436041.png" width="20%">
+    
+     
 ## Drowsiness detection method
