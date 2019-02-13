@@ -98,7 +98,7 @@ Get face images from the camera -> Grayscaling -> Light processing -> HOG & find
 
 + The calculated EAR will have a value more than zero when the eyes are open, and a value close to zero when the eyes are closed.
 + This program has **set a 50% value from the average EAR value to the threshold value**. So, 1) measures the average EAR value when the eyes are open, 2) measures the average EAR value when the driver is closing his eyes, and 3) sets the threshold using the above two results.
-+ 1) == 과정 1),   2) == 과정 2),   3) == 과정 3) (in drowsiness_detector code)
++ .1) == 과정 1),   2) == 과정 2),   3) == 과정 3) (in drowsiness_detector code)
 <img src="https://user-images.githubusercontent.com/36785390/52703067-ded15d80-2fc0-11e9-9b64-1fdbf554c12a.png">
 
   
