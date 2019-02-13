@@ -26,6 +26,7 @@ Get face images from the camera -> Grayscaling -> Light processing -> HOG & find
 + In detail
 
 <img src="https://user-images.githubusercontent.com/36785390/52612116-ba478980-2ecb-11e9-9851-0e037d0db792.png" width="80%">
+  
 0 : The filming.
   
 10 : Lightness preprocessing.
@@ -85,3 +86,27 @@ Get face images from the camera -> Grayscaling -> Light processing -> HOG & find
     
      
 ## Drowsiness detection method
++ Each eye is represented by 6 (x, y)-coordinates
+<img src="https://user-images.githubusercontent.com/36785390/52702447-83eb3680-2fbf-11e9-985f-f96ec72f5b26.png" width="40%">
+   
++ The EAR equation
+   
+<img src="https://user-images.githubusercontent.com/36785390/52702578-cb71c280-2fbf-11e9-9a06-d4434250d622.png" width ="50%">
+
++ Calculated EAR
+<img src="https://user-images.githubusercontent.com/36785390/52702645-ee9c7200-2fbf-11e9-9757-975fa22da6e1.png" width="60%">
+
++ The calculated EAR will have a value more than zero when the eyes are open, and a value close to zero when the eyes are closed.
++ This program has **set a 50% value from the average EAR value to the threshold value**. So, 1) measures the average EAR value when the eyes are open, 2) measures the average EAR value when the driver is closing his eyes, and 3) sets the threshold using the above two results.
++ 1) == 과정 1),   2) == 과정 2),   3) == 과정 3) (in drowsiness_detector code)
+<img src="https://user-images.githubusercontent.com/36785390/52703067-ded15d80-2fc0-11e9-9b64-1fdbf554c12a.png">
+
+  
+## Drowsiness level selection
+
+
+  
+## Test
+
+  
+## Execution
