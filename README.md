@@ -110,3 +110,6 @@ Get face images from the camera -> Grayscaling -> Light processing -> HOG & find
 
   
 ## Execution
+
+  
+## References
