@@ -87,11 +87,11 @@ Get face images from the camera -> Grayscaling -> Light processing -> HOG & find
      
 ## Drowsiness detection method
 + Each eye is represented by 6 (x, y)-coordinates
-<img src="https://user-images.githubusercontent.com/36785390/52702447-83eb3680-2fbf-11e9-985f-f96ec72f5b26.png" width="40%">
+<img src="https://user-images.githubusercontent.com/36785390/52702447-83eb3680-2fbf-11e9-985f-f96ec72f5b26.png" width="20%">
    
 + The EAR equation
    
-<img src="https://user-images.githubusercontent.com/36785390/52702578-cb71c280-2fbf-11e9-9a06-d4434250d622.png" width ="50%">
+<img src="https://user-images.githubusercontent.com/36785390/52702578-cb71c280-2fbf-11e9-9a06-d4434250d622.png" width ="30%">
 
 + Calculated EAR
 <img src="https://user-images.githubusercontent.com/36785390/52702645-ee9c7200-2fbf-11e9-9757-975fa22da6e1.png" width="60%">
@@ -103,13 +103,49 @@ Get face images from the camera -> Grayscaling -> Light processing -> HOG & find
 
   
 ## Drowsiness level selection
-
-
++ Conditions :
+  1. 30 FPS
+  2. Prescribed speed : 100km/h, Retention distance between vehicles >= 100m
+  3. The time which takes a person to push the brakes 0.45 (response time) + 0.2 (brake pushing time) + 0.05 (time to start braking) = 0.7 seconds
+  4. The braking distance of a vehicle running at 100 km/h is 56 meters (the driver has 44 meters of free distance)
++ Under the above conditions, the drivers has almost 0.9 seconds of free time (100km/h -> 27m/s == 1.63s of free time. 1.63 - 0.7 = 0.9 s). 
++ 30 FPS -> 27 frame = 0.9s.
+  + **if EAR < threshold for 27 frame? then going alarm off.**
++ Now I separated the drowsiness phase into three steps.
   
+<img src="https://user-images.githubusercontent.com/36785390/52762348-8058bd80-305a-11e9-9256-905e8de77740.png" width="45%">
++ Drowsiness levels are identified by the following conditions.
+  1. The first alarm will sound(approximately 0.9 seconds) between level 1 and 2 of the drowsy phase.
+  2. If you are dozing (sleeping and waking again and again) in less than 15 seconds, the drowsiness phase starts at level 1 and then the next alarm goes up to 0.
+  3. The first alarm is level 2 and the second alarm is level 1 and the third alarm makes level 0 sound when driving drowsy between 15 and 30 seconds.
+    
+<img src="https://user-images.githubusercontent.com/36785390/52762615-b0549080-305b-11e9-872a-127992397496.png" width="50%">
++ To distinguish drowsiness level, I used K-Nearest Neighbor(KNN) supervised learning algorithm. 
+  1. Create arrays with random (x, y)-coordinates.
+<img src="https://user-images.githubusercontent.com/36785390/52762829-82bc1700-305c-11e9-97cb-b41e35dfb9e6.png" width="30%">
+  2. Labeling
+<img src="https://user-images.githubusercontent.com/36785390/52762830-8485da80-305c-11e9-96db-f24a7a1ebdd6.png" width="40%">
+  3. Define K value.
+<img src="https://user-images.githubusercontent.com/36785390/52762904-e6dedb00-305c-11e9-952c-f201390eb9bd.png" width="50%">
+  4. Test KNN algorithm.
+<img src="https://user-images.githubusercontent.com/36785390/52762907-e8a89e80-305c-11e9-8928-9409bd4eaa7a.png" width="50%">
+  
+  
+## Synthesis
+<img src="https://user-images.githubusercontent.com/36785390/52762972-36bda200-305d-11e9-99a6-314dfae8f3c7.png" width="50%">
+
 ## Test
++ Before applying preprocessing
+[![BeforePreprocessing](https://img.youtube.com/vi/8yLHAP6gmOA/0.jpg)](https://www.youtube.com/watch?v=8yLHAP6gmOA)
++ After applying preprocessing
+[![AfterPreprocessing](https://img.youtube.com/vi/7iCVzF3LI6o/0.jpg)](https://www.youtube.com/watch?v=7iCVzF3LI6o)
 
   
 ## Execution
-
++ I run drowsiness_detector.ipynb just typing CTRL+ENTER.
   
 ## References
++ [Machine Learning is Fun! Part 4: Modern Face Recognition with Deep Learning](https://medium.com/@ageitgey/machine-learning-is-fun-part-4-modern-face-recognition-with-deep-learning-c3cffc121d78)
++ [Real-Time Eye Blink Detection using Facial Landmarks](https://vision.fe.uni-lj.si/cvww2016/proceedings/papers/05.pdf)
++ [Eye blink detection with OpenCV, Python, and dlib](https://www.pyimagesearch.com/2017/04/24/eye-blink-detection-opencv-python-dlib/)
++ [Histograms of Oriented Gradients for Human Detection](https://lear.inrialpes.fr/people/triggs/pubs/Dalal-cvpr05.pdf)
