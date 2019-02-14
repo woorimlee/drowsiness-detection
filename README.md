@@ -121,14 +121,18 @@ Get face images from the camera -> Grayscaling -> Light processing -> HOG & find
   3. The first alarm is level 2 and the second alarm is level 1 and the third alarm makes level 0 sound when driving drowsy between 15 and 30 seconds.
     
 <img src="https://user-images.githubusercontent.com/36785390/52762615-b0549080-305b-11e9-872a-127992397496.png" width="50%">
+   
++ To distinguish drowsiness level, I used K-Nearest Neighbor(KNN) supervised learning algorithm.
   
-+ To distinguish drowsiness level, I used K-Nearest Neighbor(KNN) supervised learning algorithm. 
   1. Create arrays with random (x, y)-coordinates.
 <img src="https://user-images.githubusercontent.com/36785390/52762829-82bc1700-305c-11e9-97cb-b41e35dfb9e6.png" width="30%">
+  
   2. Labeling
 <img src="https://user-images.githubusercontent.com/36785390/52762830-8485da80-305c-11e9-96db-f24a7a1ebdd6.png" width="40%">
+  
   3. Define K value.
 <img src="https://user-images.githubusercontent.com/36785390/52762904-e6dedb00-305c-11e9-952c-f201390eb9bd.png" width="50%">
+  
   4. Test KNN algorithm.
 <img src="https://user-images.githubusercontent.com/36785390/52762907-e8a89e80-305c-11e9-8928-9409bd4eaa7a.png" width="50%">
   
