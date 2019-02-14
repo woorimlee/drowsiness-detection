@@ -124,7 +124,7 @@ Get face images from the camera -> Grayscaling -> Light processing -> HOG & find
    
 + To distinguish drowsiness level, I used K-Nearest Neighbor(KNN) supervised learning algorithm.
   
-  1. Create arrays with random (x, y)-coordinates.
+. 1. Create arrays with random (x, y)-coordinates.
 <img src="https://user-images.githubusercontent.com/36785390/52762829-82bc1700-305c-11e9-97cb-b41e35dfb9e6.png" width="30%">
   
   2. Labeling
