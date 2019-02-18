@@ -63,6 +63,7 @@ Get face images from the camera -> Grayscaling -> Light processing -> HOG & find
 <img src="https://user-images.githubusercontent.com/36785390/52613168-3b088480-2ed0-11e9-8651-97afc34f4bae.png" width="60%">
    
 + Use the **Face Landmark Estimation algorithm** to locate the landmarks on the face.
++ Face Landmark Estimation 알고리즘을 사용해 얼굴의 68개 랜드마크를 찾아냈습니다.
   
 <img src="https://user-images.githubusercontent.com/36785390/52613175-3d6ade80-2ed0-11e9-9290-ee5dc2f2d525.png" width="30%">
 <img src="https://user-images.githubusercontent.com/36785390/52613176-3f34a200-2ed0-11e9-8f3f-94998fd2ab63.png" width="30%">
@@ -71,18 +72,26 @@ Get face images from the camera -> Grayscaling -> Light processing -> HOG & find
 
 ## Preprocessing
  
-: **Invert the lightness channel** detached from the original image and **composed it with the original grayscale image** to produce a clear image.
++ **Invert the lightness channel** detached from the original image and **composed it with the original grayscale image** to produce a clear image.
++ 영상에 있어서 조명의 영향은 영상처리에 상당히 많은 영향을 끼칩니다. 특히 그라데이션 조명을 받았을 경우 에러를 일으키는 요소가 되기 때문에, 전처리 과정으로 영상에서 조명 영향을 받을 때 그 영향을 최소화하는 작업을 진행했습니다.
++ 전처리를 위해 영상에서 분리한 Lightness 채널을 반전시키고 Grayscale 된 원본 영상과 합성하여 Clear 한 Image를 만들었습니다.
+  
  
 <img src="https://user-images.githubusercontent.com/36785390/52613306-bb2eea00-2ed0-11e9-9b64-5c45981e953e.png" width="40%">
   
 + Converting color to grayscale using **Luma Coding**
-  
++ 그레이스케일링 과정은 Luma 기법을 사용했습니다.
+
 <img src="https://user-images.githubusercontent.com/36785390/52613343-dc8fd600-2ed0-11e9-93f6-e154e20df31d.png" width="35%">
   
 <img src="https://user-images.githubusercontent.com/36785390/52613308-bc601700-2ed0-11e9-999e-40a2782932c9.png" width="40%">
   
 + There are many different models in Color Space, the **LAB color space model** is the best way to separate Lightness. [Median filtering](https://en.wikipedia.org/wiki/Median_filter) is applied to convert the value of lightness(L) obtained by using the LAB color space to match the actual lighting conditions because it differs from the actual lighting conditions.
 + The pictures below are the original image, image that separates L channel, image with Median filter applied, and inverted images from left to right. Drowsiness detection method
++ Color Space 모델에는 다양한 모델이 있는데 그중 LAB 모델은 Lightness를 가장 잘 분리해 낼 수 있는 모델입니다. 
++ LAB 컬러 공간을 사용해 얻게 된 명도 값은 실제 조명의 상태와는 차이가 있기 때문에 실제 조명의 상태에 맞게 변환하고자 메디안 필터링(Median Filtering)을 적용하는 과정을 진행했고, 이렇게 검출된 조명에 역상을 취하여 원 이미지와 합성함으로써 조명의 영향을 줄였습니다.
++ 아래의 사진은 왼쪽부터 순서대로 원본 이미지, L 채널을 분리한 이미지, Median Filter를 적용한 이미지, Invert 된 이미지입니다.
+  
     
 <img src="https://user-images.githubusercontent.com/36785390/52613441-35f80500-2ed1-11e9-9c6c-819b9e92b150.png" width="70%">
    
