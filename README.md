@@ -102,6 +102,8 @@ Get face images from the camera -> Grayscaling -> Light processing -> HOG & find
      
 ## Drowsiness detection method
 + Each eye is represented by 6 (x, y)-coordinates
++ 이 프로젝트에서는 2016년 Tereza Soukupova & Jan ´ Cech에 의해 제시된 Eyes Aspect Ratio(이하 EAR) 방식을 사용합니다. EAR은 검출된 안구에 여섯 개의 (x, y) 좌표를 이용하여 계산됩니다.
+  
 <img src="https://user-images.githubusercontent.com/36785390/52702447-83eb3680-2fbf-11e9-985f-f96ec72f5b26.png" width="20%">
    
 + The EAR equation
@@ -114,6 +116,12 @@ Get face images from the camera -> Grayscaling -> Light processing -> HOG & find
 + The calculated EAR will have a value more than zero when the eyes are open, and a value close to zero when the eyes are closed.
 + This program has **set a 50% value from the average EAR value to the threshold value**. So, 1) measures the average EAR value when the eyes are open, 2) measures the average EAR value when the driver is closing his eyes, and 3) sets the threshold using the above two results.
 + .1) == 과정 1),   2) == 과정 2),   3) == 과정 3) (in drowsiness_detector code)
++ **계산된 EAR은 눈을 뜨고 있을 땐 0이 아닌 어떤 값을 갖게 되고, 눈을 감을 땐 0에 가까운 값**을 갖습니다. 여기에 어떤 Constant로 **Threshold**를(졸음운전을 판단할 때 사용하는 임곗값) 설정할 시 그 값보다 EAR 값이 작아지는지 확인하는 방식으로 운전자가 졸음운전 중이라는 것을 감지할 수 있습니다.
++ 추가로 졸음운전 판별 시 양쪽 눈을 따로 검사할 필요는 없기 때문에 양쪽 눈 각각의 EAR 값을 평균 계산해서 사용하였습니다.
++ **Threshold** 값은 눈을 가장 크게 떴을 때 EAR 값의 50%로 설정했습니다. 이보다 작을 때는(눈 크기가 작아졌을 때) 운전자가 졸린 상태인 것으로 판단, 운전자가 졸려 하는지에 관심을 뒀기 때문에 완전 수면에 빠지지 않더라도 알람이 울립니다.
++ 이 알고리즘을 적용하기 위해 다음의 세 과정을 적용했습니다. 1) 운전자가 눈을 뜨고 있을 때 평균 EAR 값을 결정, 2) 운전자가 눈을 감고 있을 때 평균 EAR 값을 결정, 3) 위의 두 값을 이용해 눈을 뜨고 있는 상태의 50%가 되는 EAR 값을 결정.
+
+
 <img src="https://user-images.githubusercontent.com/36785390/52703067-ded15d80-2fc0-11e9-9b64-1fdbf554c12a.png">
 
   
@@ -123,10 +131,17 @@ Get face images from the camera -> Grayscaling -> Light processing -> HOG & find
   2. Prescribed speed : 100km/h, Retention distance between vehicles >= 100m
   3. The time which takes a person to push the brakes 0.45 (response time) + 0.2 (brake pushing time) + 0.05 (time to start braking) = 0.7 seconds
   4. The braking distance of a vehicle running at 100 km/h is 56 meters (the driver has 44 meters of free distance)
-+ Under the above conditions, the drivers has almost 0.9 seconds of free time (100km/h -> 27m/s == 1.63s of free time. 1.63 - 0.7 = 0.9 s). 
+  
+<img src="https://user-images.githubusercontent.com/36785390/52933285-2b88b000-3396-11e9-9e6d-d73dfb27c6de.png" width="50%">
+  
++ Under the above conditions, the drivers has almost 0.9 seconds of free time (100km/h -> 27m/s == 1.63s of free time. 1.63 - 0.7 = 0.9 s).
 + 30 FPS -> 27 frame = 0.9s.
   + **if EAR < threshold for 27 frame? then going alarm off.**
 + Now I separated the drowsiness phase into three steps.
++ 위의 조건을 토대로 다음과 같이 계산할 수 있습니다. "100km/h로 달리는 차량이 앞차와 안전거리를 유지하고 있다고 가정할 시 정지 상태의 장애물과 충돌하지 않기 위해선 56m의 제동 구간이 필요하다. 즉, 운전자에겐 44m 정도의 여유 거리가 있는 것이다. 100km/h는 1초에 27m를 이동한다. 따라서 운전자에겐 1.63초의 여유 시간이 있다. 이 시간에서 브레이크를 밟는데 걸리는 반응 속도를 빼면 약 0.9초의 시간이 남는다."
++ 결론적으로 졸음에 대한 감지와 그에 대한 조치는 눈을 감은 순간부터 약 0.9초쯤에 이루어져야 합니다. 30 FPS의 영상을 기준으로 0.9/0.033 = 약 27프레임이 되고, 졸음운전 방지 알람이 동작할 시간까지 계산하여 약 25프레임 동안 EAR 값이 Threshold보다 작으면 운전자가 졸음운전 중이라고 판단하도록 설정하였습니다. 
++ 이 프로젝트에서는 졸음운전 상태를 감지하는 것을 넘어 졸음 수준을 세 단계로 분리했습니다.
+
   
 <img src="https://user-images.githubusercontent.com/36785390/52762348-8058bd80-305a-11e9-9256-905e8de77740.png" width="45%">
   
@@ -134,10 +149,15 @@ Get face images from the camera -> Grayscaling -> Light processing -> HOG & find
   1. The first alarm will sound(approximately 0.9 seconds) between level 1 and 2 of the drowsy phase.
   2. If you are dozing (sleeping and waking again and again) in less than 15 seconds, the drowsiness phase starts at level 1 and then the next alarm goes up to 0.
   3. The first alarm is level 2 and the second alarm is level 1 and the third alarm makes level 0 sound when driving drowsy between 15 and 30 seconds.
-    
+  4. If you have not been drowsy for more than 30 seconds, set level 2.
++ 졸음 단계는 눈을 감고 있는 시간과 졸음운전 전까지 눈을 뜨고 있던 시간에 따라 구분되고, 졸음 2 -> 0으로 갈수록 알람의 세기는 세집니다.
+  
+<img src="https://user-images.githubusercontent.com/36785390/52933523-00529080-3397-11e9-9482-41dd01a476ca.png" width="50%">
+      
 <img src="https://user-images.githubusercontent.com/36785390/52762615-b0549080-305b-11e9-872a-127992397496.png" width="50%">
    
 + To distinguish drowsiness level, I used K-Nearest Neighbor(KNN) supervised learning algorithm.
++ 래프를 기준으로 실제 졸음 단계를 결정하기 위해서 지도 학습(Supervised Learning) 알고리즘 중 하나인 K-Nearest Neighbor(이하 KNN) 알고리즘을 사용하였습니다.
   
 . 1. Create arrays with random (x, y)-coordinates.
   
@@ -158,13 +178,16 @@ Get face images from the camera -> Grayscaling -> Light processing -> HOG & find
 
 ## Test
 + Before applying preprocessing
++ 전처리 전 시연 영상
 [![BeforePreprocessing](https://img.youtube.com/vi/8yLHAP6gmOA/0.jpg)](https://www.youtube.com/watch?v=8yLHAP6gmOA)
 + After applying preprocessing
++ 전처리 후 시연 영상
 [![AfterPreprocessing](https://img.youtube.com/vi/7iCVzF3LI6o/0.jpg)](https://www.youtube.com/watch?v=7iCVzF3LI6o)
 
   
 ## Execution
 + I run drowsiness_detector.ipynb just typing CTRL+ENTER.
++ 전 jupyter notebook을 사용했기 때문에 일단 업로드 해두었습니다. 파이썬으로 실행하셔도 됩니다.
   
 ## References
 + [Machine Learning is Fun! Part 4: Modern Face Recognition with Deep Learning](https://medium.com/@ageitgey/machine-learning-is-fun-part-4-modern-face-recognition-with-deep-learning-c3cffc121d78)
