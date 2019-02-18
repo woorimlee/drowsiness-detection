@@ -1,6 +1,9 @@
 # Drowsiness driving detection system with OpenCV & KNN
 ***
 : In this repository, a program was developed to **identify the driver's drowsiness based on real-time camera image and image processing techniques**, and this program makes warning alarms go off for each level of drowsiness when it detects drowsiness driving.
+  
+: 실시간 영상과 영상 처리 기술을 기반으로 운전자의 졸음 상태를 판별하고 졸음운전 중이라면 특정 수준에 따라 경고 알람이 울리게 하는 프로그램을 제작하였습니다. 실시간 Vision System에 운전자의 얼굴 및 안구 검출 기법, 조명 영향 제거에 따른 안구 오검출 제거 방법, 졸음 감지 기법, 지도 학습 알고리즘을 사용한 졸음 단계 판별법 등을 구현하였습니다. 
+  
 ## Description
 : Based on the real-time Vision System, drivers' face and eye detection techniques were added, as well as **removing lighting effects** due to the eye detection false positives, drowsiness detection techniques, and **supervised learning algorithms** to identify drowsiness level.
   
@@ -13,7 +16,9 @@ Furthermore the concept of **Eye Aspect Ratio was used** to detect drivers' drow
 Finally, the **KNN algorithm was used** to divide the drivers' level of drowsiness into three stages, and differential alarms go off for each stages.
 
 Through these works, we could research and make technology of intelligent vehicle systems and vision computing, which is gaining much attention recently.
-   
+  
+: 얼굴 및 안구 검출을 하기 위해 **Histogram of Oriented Gradients 기술과 학습된 Face landmark estimation 기법**을 사용하였습니다. **조명 영향을 제거하기 위해선 원본 영상의 조명 채널을 분리해 역 조명을 쏘아 Grayscale 된 이미지와 합쳐**주었고, 졸음 상태를 감지하기 위해선 **Eye Aspect Ratio**라는 개념을 사용하였습니다. 마지막으로 운전자의 **졸음 위험 수준을 세 단계로 나눠** 단계별로 차등 알람이 울리게 하였고, 단계를 나누는 과정에서 KNN 알고리즘을 사용했다.
+    
 ***This code is in Python 3.6***
 
 ## System diagram
@@ -53,6 +58,7 @@ Get face images from the camera -> Grayscaling -> Light processing -> HOG & find
 
 ## Extracting face and eye region
 + Using the **HOG face pattern**, to find the face from the Grayscaled-HOG-input-image. 
++ 그레이스케일링 한 이미지에서 얼굴을 찾기 위해 **HOG face pattern**을 사용했습니다.
   
 <img src="https://user-images.githubusercontent.com/36785390/52613168-3b088480-2ed0-11e9-8651-97afc34f4bae.png" width="60%">
    
