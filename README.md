@@ -157,7 +157,7 @@ Get face images from the camera -> Grayscaling -> Light processing -> HOG & find
 <img src="https://user-images.githubusercontent.com/36785390/52762615-b0549080-305b-11e9-872a-127992397496.png" width="50%">
    
 + To distinguish drowsiness level, I used K-Nearest Neighbor(KNN) supervised learning algorithm.
-+ 그래프를 기준으로 실제 졸음 단계를 결정하기 위해서 지도 학습(Supervised Learning) 알고리즘 중 하나인 K-Nearest Neighbor(이하 KNN) 알고리즘을 사용하였습니다.
++ 래프를 기준으로 실제 졸음 단계를 결정하기 위해서 지도 학습(Supervised Learning) 알고리즘 중 하나인 K-Nearest Neighbor(이하 KNN) 알고리즘을 사용하였습니다.
   
 . 1. Create arrays with random (x, y)-coordinates.
   
@@ -174,7 +174,7 @@ Get face images from the camera -> Grayscaling -> Light processing -> HOG & find
   
   
 ## Synthesis
-<img src="https://user-images.githubusercontent.com/36785390/52762972-36bda200-305d-11e9-99a6-314dfae8f3c7.png" width="80%">
+<img src="https://user-images.githubusercontent.com/36785390/52762972-36bda200-305d-11e9-99a6-314dfae8f3c7.png" width="50%">
 
 ## Test
 + Before applying preprocessing
@@ -194,3 +194,4 @@ Get face images from the camera -> Grayscaling -> Light processing -> HOG & find
 + [Real-Time Eye Blink Detection using Facial Landmarks](https://vision.fe.uni-lj.si/cvww2016/proceedings/papers/05.pdf)
 + [Eye blink detection with OpenCV, Python, and dlib](https://www.pyimagesearch.com/2017/04/24/eye-blink-detection-opencv-python-dlib/)
 + [Histograms of Oriented Gradients for Human Detection](https://lear.inrialpes.fr/people/triggs/pubs/Dalal-cvpr05.pdf)
++ [조명(Lighting)의 영향을 제거하는 방법](https://t9t9.com/60)
